@@ -9,6 +9,11 @@ class WorkerControlWidget : public QWidget
 public:
     explicit WorkerControlWidget(QWidget *parent = nullptr);
 
+private slots:
+    void addStock();
+    void dispatchStock();
+    void showAvailableStock();
+
 signals:
 
 };

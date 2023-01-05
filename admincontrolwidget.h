@@ -3,11 +3,22 @@
 
 #include <QWidget>
 
-class adminControlWidget : public QWidget
+class AdminControlWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit adminControlWidget(QWidget *parent = nullptr);
+    explicit AdminControlWidget(QWidget *parent = nullptr);
+
+private slots:
+    void addNewUser();
+    void removeUser();
+    void addNewProduct();
+    void removeProduct();
+    void addNewZone();
+    void removeZone();
+    void addStock();
+    void dispatchStock();
+    void generateReport();
 
 signals:
 

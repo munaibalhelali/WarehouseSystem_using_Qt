@@ -39,7 +39,64 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+
+    admincontrolwidget.cpp
+    admincontrolwidget.h
+
+    workercontrolwidget.cpp
+    workercontrolwidget.h
+
+    databaseSQL.cpp
+    person.cpp
+    product.cpp
+    idGenerator.cpp
+    zone.cpp
+    driver.cpp
+    adminView.cpp
+    view.cpp
+    login.cpp
+    util.cpp
+
+    addnewuserdialog.cpp
+    addnewuserdialog.h
+    addnewuserdialog.ui
+
+    removeuserdialog.cpp
+    removeuserdialog.h
+    removeuserdialog.ui
+
+    addnewproductdialog.cpp
+    addnewproductdialog.h
+    addnewproductdialog.ui
+
+    removeproductdialog.cpp
+    removeproductdialog.h
+    removeproductdialog.ui
+
+    addnewzonedialog.cpp
+    addnewzonedialog.h
+    addnewzonedialog.ui
+
+    removezonedialog.cpp
+    removezonedialog.h
+    removezonedialog.ui
+
+    addstockdialog.cpp
+    addstockdialog.h
+    addstockdialog.ui
+
+    dispatchstockdialog.cpp
+    dispatchstockdialog.h
+    dispatchstockdialog.ui
+
+    showavailablestockdialog.cpp
+    showavailablestockdialog.h
+    showavailablestockdialog.ui
+
+
   )
 endif()
 
 target_link_libraries(WarehouseSystem PRIVATE Qt5::Widgets)
+target_include_directories(WarehouseSystem PUBLIC include)
+target_link_libraries(WarehouseSystem PUBLIC sqlite3)

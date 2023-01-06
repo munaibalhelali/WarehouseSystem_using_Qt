@@ -27,6 +27,9 @@ private:
     QString role;
 
     QList<QString> availableRoles{"Admin", "Staff"};
+
+    QString warningStyle = "border-color: rgb(255,106,77); border-style: solid; border-width: 2px;";
+    QString acceptStyle = "border-color: rgb(166,255,77); border-style: solid; border-width: 2px;";
 };
 
 #endif // ADDNEWUSERDIALOG_H

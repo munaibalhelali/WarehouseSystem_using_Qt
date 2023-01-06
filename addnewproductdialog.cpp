@@ -60,17 +60,18 @@ void AddNewProductDialog::on_saveButton_clicked()
             ui->expiryDateEdit->setStyleSheet(acceptStyle);
         }
 
-        auto ret = QMessageBox::warning(this, "Incorrect data", "Please make sure you provided all needed data.", QMessageBox::Discard, QMessageBox::Retry);
-        if(ret == QMessageBox::Discard){
-            reject();
-        }
+        auto ret = QMessageBox::warning(this, "Missing information", "Please make sure you provided all needed data.", QMessageBox::Ok);
+
     }
 
 }
 
 void AddNewProductDialog::on_cancelButton_clicked()
 {
-    reject();
+    auto ret = QMessageBox::warning(this, "Cancel new product?", "Do you want to discard this task?", QMessageBox::Discard, QMessageBox::Cancel|QMessageBox::Default|QMessageBox::Escape);
+    if(ret == QMessageBox::Discard){
+        reject();
+    }
 
 }
 

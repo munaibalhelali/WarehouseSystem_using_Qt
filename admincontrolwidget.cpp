@@ -6,6 +6,12 @@
 
 #include "addnewuserdialog.h"
 #include "addnewproductdialog.h"
+#include "addnewzonedialog.h"
+#include "addstockdialog.h"
+#include "removeuserdialog.h"
+#include "removeproductdialog.h"
+#include "removezonedialog.h"
+#include "dispatchstockdialog.h"
 
 AdminControlWidget::AdminControlWidget(QWidget *parent) : QWidget(parent)
 {
@@ -70,9 +76,9 @@ AdminControlWidget::AdminControlWidget(QWidget *parent) : QWidget(parent)
     gridLayout->addWidget(removeProductButton, 0, 3);
     gridLayout->addWidget(addNewZoneButton, 1, 0);
     gridLayout->addWidget(removeZoneButton, 1, 1);
-    gridLayout->addWidget(generateReportButton, 1, 2);
-    gridLayout->addWidget(addStockButton, 1, 3);
-    gridLayout->addWidget(dispatchStockButton, 2, 0);
+    gridLayout->addWidget(addStockButton, 1, 2);
+    gridLayout->addWidget(dispatchStockButton, 1, 3);
+    gridLayout->addWidget(generateReportButton, 2, 0);
 
     this->setLayout(gridLayout);
 
@@ -86,7 +92,8 @@ void AdminControlWidget::addNewUser()
 
 void AdminControlWidget::removeUser()
 {
-
+    RemoveUserDialog* removeUserDialog = new RemoveUserDialog(this);
+    removeUserDialog->show();
 }
 
 void AdminControlWidget::addNewProduct()
@@ -97,30 +104,39 @@ void AdminControlWidget::addNewProduct()
 
 void AdminControlWidget::removeProduct()
 {
-
+    RemoveProductDialog* removeProductDialog = new RemoveProductDialog(this);
+    removeProductDialog->show();
 }
 
 void AdminControlWidget::addNewZone()
 {
+    AddNewZoneDialog* addZoneDialog = new AddNewZoneDialog(this);
+    addZoneDialog->show();
 
 }
 
 void AdminControlWidget::removeZone()
 {
+    RemoveZoneDialog* removeZoneDialog = new RemoveZoneDialog(this);
+    removeZoneDialog->show();
 
 }
 
 void AdminControlWidget::addStock()
 {
-
+    AddStockDialog* addStockDialog = new AddStockDialog(this);
+    addStockDialog->show();
 }
 
 void AdminControlWidget::dispatchStock()
 {
+    DispatchStockDialog* dispatchStockDialog = new DispatchStockDialog(this);
+    dispatchStockDialog->show();
 
 }
 
 void AdminControlWidget::generateReport()
 {
+
 
 }

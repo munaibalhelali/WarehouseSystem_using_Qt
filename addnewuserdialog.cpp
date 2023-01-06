@@ -34,16 +34,17 @@ void AddNewUserDialog::on_saveButton_clicked()
     }else if(!inPassword.isEmpty() && inPassword != inConfPassword){
         ui->confirmPasswordLineEdit->setStyleSheet("background:rgb(255,106,77)");
     }else{
-        auto ret = QMessageBox::warning(this, "Incorrect data", "Please make sure you provided all needed data.", QMessageBox::Discard, QMessageBox::Retry);
-        if(ret == QMessageBox::Discard){
-            reject();
-        }
+        auto ret = QMessageBox::warning(this, "Missing information", "Please make sure you provided all needed data.", QMessageBox::Ok);
+
     }
 
 }
 
 void AddNewUserDialog::on_cancelButton_clicked()
 {
-    reject();
+    auto ret = QMessageBox::warning(this, "Cancel new user?", "Do you want to discard this task?", QMessageBox::Discard, QMessageBox::Cancel|QMessageBox::Default|QMessageBox::Escape);
+    if(ret == QMessageBox::Discard){
+        reject();
+    }
 
 }

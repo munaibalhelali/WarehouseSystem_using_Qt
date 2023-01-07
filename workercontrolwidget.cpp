@@ -2,6 +2,11 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "addstockdialog.h"
+#include "dispatchstockdialog.h"
+#include "showavailablestockdialog.h"
+
+
 WorkerControlWidget::WorkerControlWidget(QWidget *parent) : QWidget(parent)
 {
 
@@ -32,15 +37,19 @@ WorkerControlWidget::WorkerControlWidget(QWidget *parent) : QWidget(parent)
 
 void WorkerControlWidget::addStock()
 {
-
+    AddStockDialog* addStockDialog = new AddStockDialog(this);
+    addStockDialog->show();
 }
 
 void WorkerControlWidget::dispatchStock()
 {
+    DispatchStockDialog* dispatchStockDialog = new DispatchStockDialog(this);
+    dispatchStockDialog->show();
 
 }
 
 void WorkerControlWidget::showAvailableStock()
 {
-
+    ShowAvailableStockDialog* showAvailableStockDialog = new ShowAvailableStockDialog(this);
+    showAvailableStockDialog->show();
 }

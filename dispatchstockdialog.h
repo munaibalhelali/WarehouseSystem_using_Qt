@@ -15,6 +15,13 @@ public:
     explicit DispatchStockDialog(QWidget *parent = nullptr);
     ~DispatchStockDialog();
 
+private slots:
+    void on_savePushButton_clicked();
+
+    void on_cancelPushButton_clicked();
+
+    void on_searchPushButton_clicked();
+
 private:
     Ui::DispatchStockDialog *ui;
 };

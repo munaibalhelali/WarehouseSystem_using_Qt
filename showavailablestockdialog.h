@@ -15,6 +15,9 @@ public:
     explicit ShowAvailableStockDialog(QWidget *parent = nullptr);
     ~ShowAvailableStockDialog();
 
+private slots:
+    void on_okPushButton_clicked();
+
 private:
     Ui::ShowAvailableStockDialog *ui;
 };

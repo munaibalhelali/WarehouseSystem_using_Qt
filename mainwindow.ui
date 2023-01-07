@@ -17,11 +17,7 @@
    <string notr="true">#centralwidget {
 background-color: rgb(52, 101, 164);
 }
-
-QLabel {
-	color: rgb(255, 255, 255);
-	font: 75 14pt &quot;Ubuntu Condensed&quot;;
-}</string>
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -79,14 +75,17 @@ QLabel {
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="logoutPushButton">
+        <property name="text">
+         <string>Log out</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
-     <widget class="QWidget" name="controlWidget" native="true">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-     </widget>
+     <widget class="QWidget" name="controlWidget" native="true"/>
     </item>
    </layout>
   </widget>

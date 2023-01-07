@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,9 +20,12 @@ private slots:
     void admin();
     void worker();
 
+
+    void on_logoutPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-
+    QVBoxLayout* currentControlLayout;
     //private methods
     void setupWelcomeDialog();
     void adminControl();

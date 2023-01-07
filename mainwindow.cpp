@@ -3,6 +3,7 @@
 
 #include "admincontrolwidget.h"
 #include "workercontrolwidget.h"
+#include "signinwidget.h"
 
 #include <QPushButton>
 MainWindow::MainWindow(QWidget *parent)
@@ -26,11 +27,13 @@ void MainWindow::admin()
 {
     clearChildren();
 
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    ui->controlWidget->setLayout(vLayout);
+
     ui->userTypeLabel->setText("Admin: ");
     AdminControlWidget* adminControlWidget = new AdminControlWidget(ui->controlWidget);
     adminControlWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QVBoxLayout* vLayout = new QVBoxLayout();
     QLayout* controlWidgetLayout = ui->controlWidget->layout();
     controlWidgetLayout->addWidget(adminControlWidget);
 }
@@ -38,6 +41,10 @@ void MainWindow::admin()
 void MainWindow::worker()
 {
     clearChildren();
+
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    ui->controlWidget->setLayout(vLayout);
+
     ui->userTypeLabel->setText("Staff: ");
     WorkerControlWidget* workControlWidget = new WorkerControlWidget(this);
     workControlWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -47,21 +54,16 @@ void MainWindow::worker()
 
 void MainWindow::setupWelcomeDialog()
 {
-    QPushButton* adminButton = new QPushButton(ui->controlWidget);
-    adminButton->setText("Admin");
-    adminButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    connect(adminButton, &QPushButton::clicked, this, &MainWindow::admin);
+    clearChildren();
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    ui->controlWidget->setLayout(vLayout);
 
-    QPushButton* workerButton = new QPushButton(ui->controlWidget);
-    workerButton->setText("Staff");
-    workerButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    connect(workerButton, &QPushButton::clicked, this, &MainWindow::worker);
-
-    QHBoxLayout* hBox = new QHBoxLayout();
-    hBox->addWidget(adminButton);
-    hBox->addWidget(workerButton);
-
-    ui->controlWidget->layout()->addItem(hBox);
+    ui->userTypeLabel->setText("Welcome to Warehouse system!");
+    ui->userNameLabel->setText("");
+    SignInWidget* signInWidget = new SignInWidget(this);
+    connect(signInWidget->adminButton, &QPushButton::clicked, this, &MainWindow::admin);
+    connect(signInWidget->workerButton, &QPushButton::clicked, this, &MainWindow::worker);
+    ui->controlWidget->layout()->addWidget(signInWidget);
 
 }
 
@@ -77,11 +79,23 @@ void MainWindow::workerControl()
 
 void MainWindow::clearChildren()
 {
-//    QObjectList children = ui->controlWidget->children();
-    QList<QPushButton *> allPButtons = ui->controlWidget->findChildren<QPushButton *>();
-    for(auto child: allPButtons){
-        child->deleteLater();
+
+    if ( ui->controlWidget->layout() != NULL )
+    {
+        QLayoutItem* item;
+        while ( ( item = ui->controlWidget->layout()->takeAt( 0 ) ) != NULL )
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete ui->controlWidget->layout();
     }
+
 
 }
 
+
+void MainWindow::on_logoutPushButton_clicked()
+{
+    setupWelcomeDialog();
+}

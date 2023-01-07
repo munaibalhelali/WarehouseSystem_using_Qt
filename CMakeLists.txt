@@ -37,15 +37,8 @@ else()
   add_executable(WarehouseSystem
     main.cpp
     mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-
     admincontrolwidget.cpp
-    admincontrolwidget.h
-
     workercontrolwidget.cpp
-    workercontrolwidget.h
-
     databaseSQL.cpp
     person.cpp
     product.cpp
@@ -56,41 +49,26 @@ else()
     view.cpp
     login.cpp
     util.cpp
-
     addnewuserdialog.cpp
-    addnewuserdialog.h
-    addnewuserdialog.ui
-
     removeuserdialog.cpp
-    removeuserdialog.h
-    removeuserdialog.ui
-
     addnewproductdialog.cpp
-    addnewproductdialog.h
-    addnewproductdialog.ui
-
     removeproductdialog.cpp
-    removeproductdialog.h
-    removeproductdialog.ui
-
     addnewzonedialog.cpp
-    addnewzonedialog.h
-    addnewzonedialog.ui
-
     removezonedialog.cpp
-    removezonedialog.h
-    removezonedialog.ui
-
     addstockdialog.cpp
-    addstockdialog.h
-    addstockdialog.ui
-
     dispatchstockdialog.cpp
-    dispatchstockdialog.h
-    dispatchstockdialog.ui
-
     showavailablestockdialog.cpp
-    showavailablestockdialog.h
+    signinwidget.cpp
+
+    mainwindow.ui
+    addnewuserdialog.ui
+    removeuserdialog.ui
+    addnewproductdialog.ui
+    removeproductdialog.ui
+    addnewzonedialog.ui
+    removezonedialog.ui
+    addstockdialog.ui
+    dispatchstockdialog.ui
     showavailablestockdialog.ui
 
 

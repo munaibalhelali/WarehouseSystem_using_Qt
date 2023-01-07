@@ -15,6 +15,13 @@ public:
     explicit RemoveUserDialog(QWidget *parent = nullptr);
     ~RemoveUserDialog();
 
+private slots:
+    void on_removePushButton_clicked();
+
+    void on_cancelPushButton_clicked();
+
+    void on_searchPushButton_clicked();
+
 private:
     Ui::RemoveUserDialog *ui;
 };

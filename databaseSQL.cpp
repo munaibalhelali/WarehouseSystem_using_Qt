@@ -1,4 +1,7 @@
-#include "warehouse_system/databaseSQL.hpp"
+#include "warehouseSystem/databaseSQL.hpp"
+#include <QDir>
+#include <QDebug>
+
 static std::map<std::string, std::string> returnMap;
 
 #include <typeinfo>
@@ -28,7 +31,15 @@ DatabaseSQL::DatabaseSQL() : Database()
 {
     char buffer[PATH_MAX];
     GetCurrentDir(buffer, PATH_MAX);
-    strcat(buffer, "/../data/warehouse_system.db");
+//    QSqlDatabase db2 = QSqlDatabase::addDatabase("QSQLITE");
+//     db2.setDatabaseName("warehouse_system");
+//     bool ok = db2.open();
+//     if(ok){
+//         qDebug()<<"opend database successfully!";
+//     }else{
+//         qDebug()<<"failed to opend database!";
+//     }
+    strcat(buffer, "/data/warehouse_system.db");
     dbPath = buffer;
     _openDatabase();
     _initializeIdGen();
@@ -438,7 +449,7 @@ void DatabaseSQL::_createNewTable(const char *sql)
 
 int DatabaseSQL::_insertIntoTable(const char *sql)
 {
-
+    std::cout<<sql<<std::endl;
     int rc = sqlite3_exec(db, sql, _sqlCallback, &data, &zErrMsg);
     if (rc != SQLITE_OK)
     {
@@ -465,6 +476,22 @@ int DatabaseSQL::_sqlCallback(void *data, int argc, char **argv, char **azColNam
     }
     std::cout << std::endl;
     returnMap = rMap;
+    return 0;
+}
+
+int DatabaseSQL::_searchCallback(void *outputMap, int argc, char **argv, char **azColName)
+{
+    std::vector<std::string> tempVec;
+    std::vector<std::string> headers;
+    for(int i = 0; i <argc; i++){
+        const char* data = argv[i] ? argv[i] : "NULL";
+        tempVec.push_back((std::string) data);
+        headers.push_back(azColName[i]);
+    }
+    int currRow = (*(std::map<std::string,std::vector<std::string>>*)outputMap).size();
+    (*(std::map<std::string,std::vector<std::string>>*)outputMap)["headers"] = headers;
+    (*(std::map<std::string,std::vector<std::string>>*)outputMap)["row_"+std::to_string(currRow)] = tempVec;
+
     return 0;
 }
 
@@ -539,4 +566,39 @@ std::vector<std::string> DatabaseSQL::getAvailableZones(){
     }
     return outputVector;
 
+}
+
+std::map<string, std::vector<string> > DatabaseSQL::search(string searchKeyworkd, string searchType, string tableName)
+{
+    //SELECT stock.Product_id, products.Name,  stock.Zone_id, stock.Quantity FROM stock join products  on stock.Product_id = products.id where stock.Zone_id LIKE  '%ZO%';
+    char sql[4096] = "";
+    if(tableName == "stock"){
+        strcat(sql, "SELECT stock.Product_id as Product_id, products.Name as Product_name, stock.Zone_id as Zone_id, stock.Quantity as Quantity FROM stock JOIN products on stock.Product_id=products.id where ");
+        strcat(sql, searchType.c_str());
+        strcat(sql, " LIKE '%");
+        strcat(sql, searchKeyworkd.c_str());
+        strcat(sql, "%';");
+    }else{
+        strcat(sql, "SELECT * FROM ");
+        strcat(sql, tableName.c_str());
+        strcat(sql, " where ");
+        strcat(sql, searchType.c_str());
+        strcat(sql, " LIKE '%");
+        strcat(sql, searchKeyworkd.c_str());
+        strcat(sql, "%';");
+    }
+    std::map<std::string, std::vector<std::string>> resultsMap;
+    int rc = sqlite3_exec(db, sql, _searchCallback, &resultsMap , &zErrMsg);
+    if(rc != SQLITE_OK){
+        std::cout<<"Could not save new counter: "<<zErrMsg<<std::endl;
+    }else{
+        for(auto item: resultsMap){
+            std::cout<<item.first<<std::endl;
+            for(auto data: item.second){
+                std::cout<<data<<", ";
+            }
+            std::cout<<std::endl;
+        }
+    }
+    return resultsMap;
 }

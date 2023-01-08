@@ -1,11 +1,11 @@
 #ifndef ADMIN_VIEW_
 #define ADMIN_VIEW_
-#include "warehouse_system/view.hpp"
-#include "warehouse_system/databaseSQL.hpp"
-#include "warehouse_system/person.hpp"
-#include "warehouse_system/product.hpp"
-#include "warehouse_system/zone.hpp"
-#include "warehouse_system/util.hpp"
+#include "warehouseSystem/view.hpp"
+#include "warehouseSystem/databaseSQL.hpp"
+#include "warehouseSystem/person.hpp"
+#include "warehouseSystem/product.hpp"
+#include "warehouseSystem/zone.hpp"
+#include "warehouseSystem/util.hpp"
 #include <iostream>
 
 class AdminView : public View

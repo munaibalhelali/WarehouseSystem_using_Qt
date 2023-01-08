@@ -4,8 +4,8 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include "warehouse_system/product.hpp"
-#include "warehouse_system/databaseSQL.hpp"
+#include "warehouseSystem/product.hpp"
+#include "warehouseSystem/databaseSQL.hpp"
 
 class View
 {

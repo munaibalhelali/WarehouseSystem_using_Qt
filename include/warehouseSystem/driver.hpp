@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 
-#include "warehouse_system/view.hpp"
-#include "warehouse_system/adminView.hpp"
-#include "warehouse_system/person.hpp"
+#include "warehouseSystem/view.hpp"
+#include "warehouseSystem/adminView.hpp"
+#include "warehouseSystem/person.hpp"
 
 class Driver
 {

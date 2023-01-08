@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <string>
-#include "warehouse_system/person.hpp"
-#include "warehouse_system/databaseSQL.hpp"
-#include "warehouse_system/util.hpp"
+#include "warehouseSystem/person.hpp"
+#include "warehouseSystem/databaseSQL.hpp"
+#include "warehouseSystem/util.hpp"
 
 class Login
 {

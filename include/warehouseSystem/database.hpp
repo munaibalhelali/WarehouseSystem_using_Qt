@@ -12,9 +12,9 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "warehouse_system/person.hpp"
-#include "warehouse_system/product.hpp"
-#include "warehouse_system/zone.hpp"
+#include "warehouseSystem/person.hpp"
+#include "warehouseSystem/product.hpp"
+#include "warehouseSystem/zone.hpp"
 
 class Database
 {

@@ -17,7 +17,7 @@ private:
 
 public:
   Zone();
-  Zone(string area_, string id_, string category_, string location_, map<string, int> stock_);
+  Zone(string id_, string area_, string category_, string location_, map<string, int> stock_);
   void setArea(string area_);
   void setID(string id_);
   void setCategory(string category_);

@@ -1,6 +1,8 @@
 #include "addnewproductdialog.h"
 #include "ui_addnewproductdialog.h"
 #include <QMessageBox>
+#include "warehouseSystem/product.hpp"
+#include "warehouseSystem/databaseSQL.hpp"
 
 AddNewProductDialog::AddNewProductDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,52 +18,52 @@ AddNewProductDialog::~AddNewProductDialog()
 
 void AddNewProductDialog::on_saveButton_clicked()
 {
+    bool ErrFlag = false;
 
-
-    QString inName = ui->productNameLineEdit->text();
-    QString inManufacturer = ui->ManufacturerLineEdit->text();
-    int inSize = ui->sizeComboBox->currentIndex();
-    int inCategory = ui->CategoryComboBox->currentIndex();
-    QString inExpiryDate = ui->expiryDateEdit->text();
-
-    if(!inName.isEmpty() && !inManufacturer.isEmpty()
-            && inSize != 0 && inCategory != 0 && !inExpiryDate.isEmpty()){
-        name = inName;
-        manufacturer = inManufacturer;
-        expiryDate = inExpiryDate;
-        size = ui->sizeComboBox->currentText();
-        category = ui->CategoryComboBox->currentText();
-        accept();
-
+    if(!ui->productNameLineEdit->text().isEmpty()){
+        name = ui->productNameLineEdit->text();
+        ui->productNameLineEdit->setStyleSheet(acceptStyle);
     }else{
-        if(inName.isEmpty()){
-            ui->productNameLineEdit->setStyleSheet(warningStyle);
-        }else{
-            ui->productNameLineEdit->setStyleSheet(acceptStyle);
-        }
-        if(inManufacturer.isEmpty()){
-            ui->ManufacturerLineEdit->setStyleSheet(warningStyle);
-        }else{
-            ui->ManufacturerLineEdit->setStyleSheet(acceptStyle);
-        }
-        if(inSize == 0){
-            ui->sizeComboBox->setStyleSheet(warningStyle);
-        }else{
-            ui->sizeComboBox->setStyleSheet(acceptStyle);
-        }
-        if(inCategory == 0){
-            ui->CategoryComboBox->setStyleSheet(warningStyle);
-        }else{
-            ui->CategoryComboBox->setStyleSheet(acceptStyle);
-        }
-        if(inExpiryDate.isEmpty()){
-            ui->expiryDateEdit->setStyleSheet(warningStyle);
-        }else{
-            ui->expiryDateEdit->setStyleSheet(acceptStyle);
-        }
+        ErrFlag = true;
+        ui->productNameLineEdit->setStyleSheet(warningStyle);
+    }
 
+    if(!ui->ManufacturerLineEdit->text().isEmpty()){
+        manufacturer = ui->ManufacturerLineEdit->text();
+        ui->ManufacturerLineEdit->setStyleSheet(acceptStyle);
+    }else{
+        ErrFlag = true;
+        ui->ManufacturerLineEdit->setStyleSheet(warningStyle);
+    }
+
+    if(ui->sizeComboBox->currentIndex() != 0){
+        size = ui->sizeComboBox->currentText();
+        ui->sizeComboBox->setStyleSheet(acceptStyle);
+    }else{
+        ErrFlag = true;
+        ui->sizeComboBox->setStyleSheet(warningStyle);
+    }
+
+    if(ui->CategoryComboBox->currentIndex() != 0){
+        category = ui->CategoryComboBox->currentText();
+        ui->CategoryComboBox->setStyleSheet(acceptStyle);
+    }else{
+        ErrFlag = true;
+        ui->CategoryComboBox->setStyleSheet(warningStyle);
+    }
+
+    if( !ui->expiryDateEdit->text().isEmpty()){
+        expiryDate = ui->expiryDateEdit->text();
+        ui->expiryDateEdit->setStyleSheet(acceptStyle);
+    }else{
+        ErrFlag = true;
+        ui->expiryDateEdit->setStyleSheet(warningStyle);
+    }
+
+    if(ErrFlag){
         auto ret = QMessageBox::warning(this, "Missing information", "Please make sure you provided all needed data.", QMessageBox::Ok);
-
+    }else{
+        saveData();
     }
 
 }
@@ -101,4 +103,14 @@ void AddNewProductDialog::on_ManufacturerLineEdit_editingFinished()
         ui->ManufacturerLineEdit->setStyleSheet(acceptStyle);
     else
         ui->ManufacturerLineEdit->setStyleSheet(warningStyle);
+}
+
+void AddNewProductDialog::saveData()
+{
+    DatabaseSQL database;
+    std::string id = database.generateID("product");
+    Product product(name.toStdString(), id, manufacturer.toStdString(), expiryDate.toStdString(), size.toStdString(), category.toStdString());
+    database.addProduct(product);
+    accept();
+
 }

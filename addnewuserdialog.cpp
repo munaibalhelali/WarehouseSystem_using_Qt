@@ -24,12 +24,13 @@ void AddNewUserDialog::on_saveButton_clicked()
     bool staffRadio = ui->staffRadioButton->isChecked();
     if (!inName.isEmpty() && !inPassword.isEmpty() && inPassword == inConfPassword){
         name = inName;
-        Password = inPassword;
+        password = inPassword;
         if(adminRadio){
             role = ui->adminRadioButton->text();
         }else if(staffRadio){
             role = ui->staffRadioButton->text();
         }
+        saveData();
         accept();
     }else if(!inPassword.isEmpty() && inPassword != inConfPassword){
         ui->confirmPasswordLineEdit->setStyleSheet("background:rgb(255,106,77)");
@@ -46,5 +47,13 @@ void AddNewUserDialog::on_cancelButton_clicked()
     if(ret == QMessageBox::Discard){
         reject();
     }
+
+}
+
+void AddNewUserDialog::saveData()
+{
+    std::string id = database.generateID("person");
+    Person person(name.toStdString(), id, role.toStdString(), password.toStdString());
+    database.addUser(person);
 
 }

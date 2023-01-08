@@ -2,6 +2,7 @@
 #define ADDNEWUSERDIALOG_H
 
 #include <QDialog>
+#include "warehouseSystem/databaseSQL.hpp"
 
 namespace Ui {
 class AddNewUserDialog;
@@ -23,13 +24,17 @@ private slots:
 private:
     Ui::AddNewUserDialog *ui;
     QString name;
-    QString Password;
+    QString password;
     QString role;
+    DatabaseSQL database;
 
     QList<QString> availableRoles{"Admin", "Staff"};
 
     QString warningStyle = "border-color: rgb(255,106,77); border-style: solid; border-width: 2px;";
     QString acceptStyle = "border-color: rgb(166,255,77); border-style: solid; border-width: 2px;";
+
+    //private functions
+    void saveData();
 };
 
 #endif // ADDNEWUSERDIALOG_H

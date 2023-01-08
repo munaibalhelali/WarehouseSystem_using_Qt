@@ -1,4 +1,4 @@
-#include "warehouse_system/product.hpp"
+#include "warehouseSystem/product.hpp"
 using namespace std;
 // class
 Product::Product()

@@ -1,4 +1,4 @@
-#include "warehouse_system/view.hpp"
+#include "warehouseSystem/view.hpp"
 
 // Helper functionw
 std::string _getProductIDFromKeyboard()

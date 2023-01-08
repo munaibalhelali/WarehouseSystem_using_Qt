@@ -24,7 +24,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Sql REQUIRED)
 
 if(ANDROID)
   add_library(WarehouseSystem SHARED
@@ -71,10 +71,12 @@ else()
     dispatchstockdialog.ui
     showavailablestockdialog.ui
 
-
   )
 endif()
 
 target_link_libraries(WarehouseSystem PRIVATE Qt5::Widgets)
 target_include_directories(WarehouseSystem PUBLIC include)
 target_link_libraries(WarehouseSystem PUBLIC sqlite3)
+target_link_libraries(WarehouseSystem PRIVATE Qt5::Sql)
+
+

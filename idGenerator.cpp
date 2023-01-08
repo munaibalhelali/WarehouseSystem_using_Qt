@@ -1,4 +1,4 @@
-#include "warehouse_system/idGenerator.hpp"
+#include "warehouseSystem/idGenerator.hpp"
 
 IdGenerator::IdGenerator() {}
 
@@ -16,8 +16,10 @@ int IdGenerator::createNewCounter(std::string category)
 
 std::string IdGenerator::generateID(std::string category)
 {
-    if (!isExists(category))
-        throw std::invalid_argument("Category [" + category + "] does not exist!");
+    if (!isExists(category)){
+        createNewCounter(category);
+//        throw std::invalid_argument("Category [" + category + "] does not exist!");
+    }
     std::string ID = category + "_" + std::to_string(categoriesList[category]);
     categoriesList[category]++;
     return ID;

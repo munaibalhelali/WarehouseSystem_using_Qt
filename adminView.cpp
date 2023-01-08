@@ -1,4 +1,4 @@
-#include "warehouse_system/adminView.hpp"
+#include "warehouseSystem/adminView.hpp"
 
 AdminView::AdminView() : View(){}
 

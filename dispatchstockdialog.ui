@@ -27,7 +27,7 @@ color: rgb(0, 0, 0);</string>
       <item>
        <widget class="QRadioButton" name="nameRadioButton">
         <property name="text">
-         <string>Name</string>
+         <string>Product Name</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -37,14 +37,14 @@ color: rgb(0, 0, 0);</string>
       <item>
        <widget class="QRadioButton" name="idRadioButton">
         <property name="text">
-         <string>ID</string>
+         <string>Product ID</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="categoryRadioButton">
+       <widget class="QRadioButton" name="zoneIdRadioButton">
         <property name="text">
-         <string>Category</string>
+         <string>Zone ID</string>
         </property>
        </widget>
       </item>
@@ -126,12 +126,17 @@ color: rgb(0, 0, 0);</string>
        </attribute>
        <column>
         <property name="text">
-         <string>Product</string>
+         <string>Product ID</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>Zone</string>
+         <string>Product Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Zone ID</string>
         </property>
        </column>
        <column>

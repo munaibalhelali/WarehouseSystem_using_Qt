@@ -2,6 +2,9 @@
 #include "ui_addnewzonedialog.h"
 
 #include <QMessageBox>
+#include "warehouseSystem/databaseSQL.hpp"
+#include "warehouseSystem/zone.hpp"
+#include <QDebug>
 
 AddNewZoneDialog::AddNewZoneDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,7 +31,7 @@ void AddNewZoneDialog::on_saveButton_clicked()
     }
 
     if(ui->areaComboBox->currentIndex() != 0){
-        area = ui->areaComboBox->currentText();
+        area = "area_"+ui->areaComboBox->currentText();
         ui->areaComboBox->setStyleSheet(acceptStyle);
     }else{
         ui->areaComboBox->setStyleSheet(warningStyle);
@@ -53,7 +56,7 @@ void AddNewZoneDialog::on_saveButton_clicked()
     if(ErrFlag){
         QMessageBox::warning(this, "Missing information!", "Please make sure you provided all the required information.", QMessageBox::Ok);
     }else{
-        accept();
+        saveData();
     }
 }
 
@@ -63,4 +66,15 @@ void AddNewZoneDialog::on_cancelButton_clicked()
     if(ret == QMessageBox::Discard){
         reject();
     }
+}
+
+void AddNewZoneDialog::saveData()
+{
+    DatabaseSQL database;
+    std::string id = database.generateID("zone");
+    std::map<std::string, int> stock;
+    Zone zone(id, area.toStdString(), category.toStdString(), location.toStdString(), stock);
+    database.addZone(zone);
+    accept();
+
 }

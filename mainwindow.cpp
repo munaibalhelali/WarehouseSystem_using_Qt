@@ -4,13 +4,22 @@
 #include "admincontrolwidget.h"
 #include "workercontrolwidget.h"
 #include "signinwidget.h"
-
 #include <QPushButton>
+#include <QTimer>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->dateTimeLabel->setStyleSheet("color: white");
+    ui->userTypeLabel->setStyleSheet("color: white; font: 16pt \"Ubuntu\";");
+    ui->userNameLabel->setStyleSheet("color: white; font: 16pt \"Ubuntu\";");
+
+    t = new QDateTime();
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::updateTimeDateLabel);
+    timer->start(500);
 
     QVBoxLayout* vLayout = new QVBoxLayout();
     ui->controlWidget->setLayout(vLayout);
@@ -26,7 +35,6 @@ MainWindow::~MainWindow()
 void MainWindow::admin()
 {
     clearChildren();
-
     QVBoxLayout* vLayout = new QVBoxLayout();
     ui->controlWidget->setLayout(vLayout);
 
@@ -52,6 +60,19 @@ void MainWindow::worker()
 
 }
 
+void MainWindow::signIn(QString userId)
+{
+
+    currentUser = db.getUser(userId.toStdString());
+    ui->userNameLabel->setText(QString(currentUser.getName().c_str()));
+    if(currentUser.getRole() == "Admin"){
+        admin();
+    }else{
+        worker();
+    }
+    ui->logoutPushButton->setHidden(false);
+}
+
 void MainWindow::setupWelcomeDialog()
 {
     clearChildren();
@@ -60,20 +81,11 @@ void MainWindow::setupWelcomeDialog()
 
     ui->userTypeLabel->setText("Welcome to Warehouse system!");
     ui->userNameLabel->setText("");
+    ui->logoutPushButton->setHidden(true);
     SignInWidget* signInWidget = new SignInWidget(this);
-    connect(signInWidget->adminButton, &QPushButton::clicked, this, &MainWindow::admin);
-    connect(signInWidget->workerButton, &QPushButton::clicked, this, &MainWindow::worker);
+    connect(signInWidget, &SignInWidget::successfullSignIn, this, &MainWindow::signIn);
+
     ui->controlWidget->layout()->addWidget(signInWidget);
-
-}
-
-void MainWindow::adminControl()
-{
-
-}
-
-void MainWindow::workerControl()
-{
 
 }
 
@@ -98,4 +110,9 @@ void MainWindow::clearChildren()
 void MainWindow::on_logoutPushButton_clicked()
 {
     setupWelcomeDialog();
+}
+
+void MainWindow::updateTimeDateLabel()
+{
+    ui->dateTimeLabel->setText(t->currentDateTime().toString("dddd dd.MM.yyyy  hh:mm AP"));
 }

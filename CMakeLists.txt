@@ -70,6 +70,8 @@ else()
     addstockdialog.ui
     dispatchstockdialog.ui
     showavailablestockdialog.ui
+    signinwidget.ui
+
 
   )
 endif()

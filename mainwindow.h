@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QVBoxLayout>
-
+#include "warehouseSystem/databaseSQL.hpp"
+#include "warehouseSystem/person.hpp"
+#include <QDateTime>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,17 +21,19 @@ public:
 private slots:
     void admin();
     void worker();
-
-
+    void signIn(QString);
     void on_logoutPushButton_clicked();
+    void updateTimeDateLabel();
 
 private:
     Ui::MainWindow *ui;
     QVBoxLayout* currentControlLayout;
+    Person currentUser;
+    DatabaseSQL db;
+    QDateTime* t;
+    QTimer *timer;
     //private methods
     void setupWelcomeDialog();
-    void adminControl();
-    void workerControl();
     void clearChildren();
 
 };

@@ -2,6 +2,8 @@
 #define SHOWAVAILABLESTOCKDIALOG_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
+#include "warehouseSystem/databaseSQL.hpp"
 
 namespace Ui {
 class ShowAvailableStockDialog;
@@ -18,8 +20,11 @@ public:
 private slots:
     void on_okPushButton_clicked();
 
+    void on_searchPushButton_clicked();
+
 private:
     Ui::ShowAvailableStockDialog *ui;
+    DatabaseSQL db;
 };
 
 #endif // SHOWAVAILABLESTOCKDIALOG_H

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
+    <width>534</width>
     <height>530</height>
    </rect>
   </property>
@@ -25,19 +25,19 @@ color: rgb(0, 0, 0);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QRadioButton" name="nameRadioButton">
+       <widget class="QRadioButton" name="idRadioButton">
         <property name="text">
-         <string>Name</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>ID</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="idRadioButton">
+       <widget class="QRadioButton" name="areaRadioButton">
         <property name="text">
-         <string>ID</string>
+         <string>Area</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -54,7 +54,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="searchKeyworkdLineEdit"/>
+      <widget class="QLineEdit" name="searchKeywordLineEdit"/>
      </item>
     </layout>
    </item>
@@ -112,7 +112,22 @@ color: rgb(0, 0, 0);</string>
        </column>
        <column>
         <property name="text">
-         <string>Name</string>
+         <string>Stock</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Area</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Category</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Location</string>
         </property>
        </column>
       </widget>

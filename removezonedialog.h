@@ -2,6 +2,8 @@
 #define REMOVEZONEDIALOG_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
+#include "warehouseSystem/databaseSQL.hpp"
 
 namespace Ui {
 class RemoveZoneDialog;
@@ -22,8 +24,11 @@ private slots:
 
     void on_cancelPushButton_clicked();
 
+    void on_availableZonesTableWidget_itemClicked(QTableWidgetItem *item);
+
 private:
     Ui::RemoveZoneDialog *ui;
+    DatabaseSQL db;
 };
 
 #endif // REMOVEZONEDIALOG_H

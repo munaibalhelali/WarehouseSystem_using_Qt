@@ -1,6 +1,7 @@
 #include "dispatchstockdialog.h"
 #include "ui_dispatchstockdialog.h"
 #include <QMessageBox>
+#include <QDebug>
 
 DispatchStockDialog::DispatchStockDialog(QWidget *parent) :
     QDialog(parent),
@@ -51,6 +52,7 @@ void DispatchStockDialog::on_cancelPushButton_clicked()
 
 void DispatchStockDialog::on_searchPushButton_clicked()
 {
+    ui->availableProductsTableWidget->setSortingEnabled(false);
     ui->availableProductsTableWidget->setRowCount(0);
     QString searchType;
     if(ui->nameRadioButton->isChecked()){
@@ -62,7 +64,6 @@ void DispatchStockDialog::on_searchPushButton_clicked()
     }
 
     std::map<std::string, std::vector<std::string>> stock = db.search(ui->searchKeyWordLineEdit->text().toStdString(), searchType.toStdString(), "stock");
-
     for(auto product: stock){
         if(product.first == "headers"){
             continue;
@@ -75,19 +76,12 @@ void DispatchStockDialog::on_searchPushButton_clicked()
         QString avZone = QString(product.second[2].c_str());
         QString avAmount = QString(product.second[3].c_str());
 
-        QTableWidgetItem* newItem = new QTableWidgetItem(QString(avId));
-        ui->availableProductsTableWidget->setItem(rowCount, 0, newItem);
-
-        QTableWidgetItem* newItem1 = new QTableWidgetItem(QString(avName));
-        ui->availableProductsTableWidget->setItem(rowCount, 1, newItem1);
-
-        QTableWidgetItem* newItem2 = new QTableWidgetItem(QString(avZone));
-        ui->availableProductsTableWidget->setItem(rowCount, 2, newItem2);
-
-        QTableWidgetItem* newItem3 = new QTableWidgetItem(QString(avAmount));
-        ui->availableProductsTableWidget->setItem(rowCount, 3, newItem3);
-
+        ui->availableProductsTableWidget->setItem(rowCount, 0, new QTableWidgetItem(avId));
+        ui->availableProductsTableWidget->setItem(rowCount, 1, new QTableWidgetItem(avName));
+        ui->availableProductsTableWidget->setItem(rowCount, 2, new QTableWidgetItem(avZone));
+        ui->availableProductsTableWidget->setItem(rowCount, 3, new QTableWidgetItem(avAmount));
     }
+    ui->availableProductsTableWidget->setSortingEnabled(true);
     ui->availableProductsTableWidget->sortByColumn(0, Qt::AscendingOrder);
 
 }
@@ -118,4 +112,14 @@ void DispatchStockDialog::saveData(){
                              QMessageBox::Ok|QMessageBox::Default|QMessageBox::Escape);
     }
     on_searchPushButton_clicked();
+}
+
+void DispatchStockDialog::on_availableProductsTableWidget_cellClicked(int row, int column)
+{   QTableWidgetItem* item = ui->availableProductsTableWidget->item(row, column);
+    if(item != nullptr){
+        qDebug()<<row<<", "<<column<<": "<<ui->availableProductsTableWidget->item(row, column)->text();
+        on_availableProductsTableWidget_itemClicked(ui->availableProductsTableWidget->item(row, column));
+    }else{
+        qDebug()<<"null pointer";
+    }
 }

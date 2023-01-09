@@ -26,6 +26,8 @@ private slots:
 
     void on_availableProductsTableWidget_itemClicked(QTableWidgetItem *item);
 
+    void on_availableProductsTableWidget_cellClicked(int row, int column);
+
 private:
     Ui::DispatchStockDialog *ui;
     DatabaseSQL db;

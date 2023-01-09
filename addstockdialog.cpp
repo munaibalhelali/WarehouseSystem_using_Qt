@@ -80,13 +80,20 @@ void AddStockDialog::on_searchPushButton_clicked()
             columns++;
         }
     }
+    ui->availableProductsTableWidget->sortByColumn(0, Qt::AscendingOrder);
 }
 
 
 void AddStockDialog::saveData()
 {
-    db.addStock(currentProductID.toStdString(), zone.toStdString(), amount.toInt());
-    accept();
+    bool ret = db.addStock(currentProductID.toStdString(), zone.toStdString(), amount.toInt());
+    if(ret){
+        QMessageBox::information(this,
+                                 "Successful!",
+                                 "Stock was added successfully!",
+                                 QMessageBox::Ok);
+        on_searchPushButton_clicked();
+    }
 }
 
 void AddStockDialog::on_availableProductsTableWidget_itemClicked(QTableWidgetItem *item)

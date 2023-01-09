@@ -2,7 +2,9 @@
 #define REMOVEUSERDIALOG_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
 
+#include "warehouseSystem/databaseSQL.hpp"
 namespace Ui {
 class RemoveUserDialog;
 }
@@ -22,8 +24,11 @@ private slots:
 
     void on_searchPushButton_clicked();
 
+    void on_availableUsersTableWidget_itemClicked(QTableWidgetItem *item);
+
 private:
     Ui::RemoveUserDialog *ui;
+    DatabaseSQL db;
 };
 
 #endif // REMOVEUSERDIALOG_H

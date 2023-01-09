@@ -25,7 +25,7 @@ color: rgb(0, 0, 0);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="nameRadioButton">
         <property name="text">
          <string>Name</string>
         </property>
@@ -35,7 +35,7 @@ color: rgb(0, 0, 0);</string>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="idRadioButton">
         <property name="text">
          <string>ID</string>
         </property>
@@ -54,7 +54,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="searchKeyworkdLineEdit"/>
+      <widget class="QLineEdit" name="searchKeywordLineEdit"/>
      </item>
     </layout>
    </item>
@@ -98,7 +98,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="availableUsersTableWidget">
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>200</number>
        </attribute>

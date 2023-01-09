@@ -2,6 +2,8 @@
 #define REMOVEPRODUCTDIALOG_H
 
 #include <QDialog>
+#include "warehouseSystem/databaseSQL.hpp"
+#include <QTableWidgetItem>
 
 namespace Ui {
 class RemoveProductDialog;
@@ -22,8 +24,12 @@ private slots:
 
     void on_searchPushButton_clicked();
 
+    void on_availableProductsTableWidget_itemClicked(QTableWidgetItem *item);
+
 private:
     Ui::RemoveProductDialog *ui;
+
+    DatabaseSQL db;
 };
 
 #endif // REMOVEPRODUCTDIALOG_H

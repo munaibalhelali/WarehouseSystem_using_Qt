@@ -52,16 +52,6 @@ color: rgb(0, 0, 0);</string>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="showAllCheckBox">
-     <property name="text">
-      <string>Show All</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QLabel" name="label">
@@ -71,9 +61,9 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="searchKeyworkdLineEdit">
+      <widget class="QLineEdit" name="searchKeywordLineEdit">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -97,7 +87,7 @@ color: rgb(0, 0, 0);</string>
      <item>
       <widget class="QPushButton" name="searchPushButton">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -131,22 +121,22 @@ color: rgb(0, 0, 0);</string>
        </attribute>
        <column>
         <property name="text">
-         <string>ID</string>
+         <string>Product ID</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>Name</string>
+         <string>Product Name</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>Zone</string>
+         <string>Zone ID</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>Stock</string>
+         <string>Available Stock</string>
         </property>
        </column>
       </widget>

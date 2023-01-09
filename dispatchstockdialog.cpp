@@ -37,7 +37,7 @@ void DispatchStockDialog::on_savePushButton_clicked()
     if(ErrFlag){
         QMessageBox::warning(this, "Missing information!", "Please make sure you provided all the required information.", QMessageBox::Ok);
     }else{
-        accept();
+        saveData();
     }
 }
 
@@ -70,26 +70,25 @@ void DispatchStockDialog::on_searchPushButton_clicked()
         int rowCount = ui->availableProductsTableWidget->rowCount();
         ui->availableProductsTableWidget->insertRow(rowCount);
 
-        std::string avId = product.second[0];
-        std::string avName = product.second[1];
-        std::string avZone = product.second[2];
-        std::string avAmount = product.second[3];
-        std::cout<<"avs: "<< avId<<", "<<avZone<<", "<<avAmount<<std::endl;
+        QString avId = QString(product.second[0].c_str());
+        QString avName = QString(product.second[1].c_str());
+        QString avZone = QString(product.second[2].c_str());
+        QString avAmount = QString(product.second[3].c_str());
 
-        QTableWidgetItem* newItem = new QTableWidgetItem(QString(avId.c_str()));
+        QTableWidgetItem* newItem = new QTableWidgetItem(QString(avId));
         ui->availableProductsTableWidget->setItem(rowCount, 0, newItem);
 
-        newItem = new QTableWidgetItem(QString(avName.c_str()));
-        ui->availableProductsTableWidget->setItem(rowCount, 1, newItem);
+        QTableWidgetItem* newItem1 = new QTableWidgetItem(QString(avName));
+        ui->availableProductsTableWidget->setItem(rowCount, 1, newItem1);
 
-        newItem = new QTableWidgetItem(QString(avZone.c_str()));
-        ui->availableProductsTableWidget->setItem(rowCount, 2, newItem);
+        QTableWidgetItem* newItem2 = new QTableWidgetItem(QString(avZone));
+        ui->availableProductsTableWidget->setItem(rowCount, 2, newItem2);
 
-        newItem = new QTableWidgetItem(QString(avAmount.c_str()));
-        ui->availableProductsTableWidget->setItem(rowCount, 3, newItem);
+        QTableWidgetItem* newItem3 = new QTableWidgetItem(QString(avAmount));
+        ui->availableProductsTableWidget->setItem(rowCount, 3, newItem3);
 
     }
-    ui->availableProductsTableWidget->sortByColumn(0);
+    ui->availableProductsTableWidget->sortByColumn(0, Qt::AscendingOrder);
 
 }
 
@@ -107,6 +106,16 @@ void DispatchStockDialog::on_availableProductsTableWidget_itemClicked(QTableWidg
 }
 
 void DispatchStockDialog::saveData(){
-    db.addStock(currentProductID.toStdString(), zone.toStdString(), amount.toInt());
-    accept();
+    bool ret = db.reduceStock(currentProductID.toStdString(), zone.toStdString(), amount.toInt());
+    if(ret){
+        QMessageBox::information(this,
+                                 "Successful!",
+                                 "Product was dispatched successfully!",
+                                 QMessageBox::Ok);
+    } else{
+        QMessageBox::warning(this, "Cannot dispatch stock!",
+                             "Please make sure there is enough stock!",
+                             QMessageBox::Ok|QMessageBox::Default|QMessageBox::Escape);
+    }
+    on_searchPushButton_clicked();
 }

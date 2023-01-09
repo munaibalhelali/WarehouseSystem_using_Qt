@@ -110,7 +110,11 @@ void AddNewProductDialog::saveData()
     DatabaseSQL database;
     std::string id = database.generateID("product");
     Product product(name.toStdString(), id, manufacturer.toStdString(), expiryDate.toStdString(), size.toStdString(), category.toStdString());
-    database.addProduct(product);
-    accept();
-
+    bool ret = database.addProduct(product);
+    if(ret){
+        QMessageBox::information(this,
+                                 "Successful!",
+                                 "New product was recored!",
+                                 QMessageBox::Ok);
+    }
 }

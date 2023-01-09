@@ -27,7 +27,7 @@ int _receiveVector(void* outputVector, int argc, char **argv, char **azColName){
     return 0;
 }
 
-DatabaseSQL::DatabaseSQL() : Database()
+DatabaseSQL::DatabaseSQL()
 {
     char buffer[PATH_MAX];
     GetCurrentDir(buffer, PATH_MAX);
@@ -46,7 +46,7 @@ DatabaseSQL::DatabaseSQL() : Database()
 
 }
 
-DatabaseSQL::DatabaseSQL(const char *path) : Database()
+DatabaseSQL::DatabaseSQL(const char *path)
 {
     dbPath = path;
     _openDatabase();
@@ -81,7 +81,7 @@ void DatabaseSQL::_initializeIdGen(){
     }
 }
 
-void DatabaseSQL::addUser(Person newUser)
+bool DatabaseSQL::addUser(Person newUser)
 {
     char sql[4096] = "INSERT INTO persons (id, Name, Role, Password) VALUES('";
     strcat(sql, newUser.getID().c_str());
@@ -93,6 +93,7 @@ void DatabaseSQL::addUser(Person newUser)
     strcat(sql, newUser.getPassword().c_str());
     strcat(sql, "');");
     int rc = _insertIntoTable(sql);
+    return (rc == SQLITE_OK)? true: false;
 }
 
 Person DatabaseSQL::getUser(std::string personID)
@@ -134,7 +135,7 @@ bool DatabaseSQL::removeUser(std::string personID){
     }
 }
 
-void DatabaseSQL::addProduct(Product newProduct)
+bool DatabaseSQL::addProduct(Product newProduct)
 {
     char sql[4096] = "INSERT INTO products (id, Name, Manufacturer, ExpiryDate, Size, Category) VALUES('";
     strcat(sql, newProduct.getID().c_str());
@@ -150,6 +151,7 @@ void DatabaseSQL::addProduct(Product newProduct)
     strcat(sql, newProduct.getCategory().c_str());
     strcat(sql, "');");
     int rc = _insertIntoTable(sql);
+    return (rc == SQLITE_OK)? true: false;
 }
 
 Product DatabaseSQL::getProduct(std::string productID) {
@@ -192,7 +194,7 @@ bool DatabaseSQL::removeProduct(std::string productID){
     }
 }
 
-void DatabaseSQL::addZone(Zone newZone)
+bool DatabaseSQL::addZone(Zone newZone)
 {
     char sql[4096] = "INSERT INTO zones (id, Area, Category, Location) VALUES('";
     strcat(sql, newZone.getID().c_str());
@@ -208,6 +210,7 @@ void DatabaseSQL::addZone(Zone newZone)
     if(!stock.empty()){
         _recordStock(stock, newZone.getID());
     }
+    return (rc == SQLITE_OK)? true: false;
     
 }
 Zone DatabaseSQL::getZone(std::string zoneID)
@@ -252,12 +255,12 @@ bool DatabaseSQL::removeZone(std::string zoneID){
     }
 }
 
-void DatabaseSQL::addStock(std::string productID,std::string zoneID, int quantity)
+bool DatabaseSQL::addStock(std::string productID,std::string zoneID, int quantity)
 {
     Product product = getProduct(productID);
     if(product.getID() == ""){
         std::cout<<"Product: "<<productID<<" does not exist!"<<std::endl;
-        return;
+        return false;
     }
 
     char sql[4096] = "";
@@ -281,10 +284,11 @@ void DatabaseSQL::addStock(std::string productID,std::string zoneID, int quantit
         strcat(sql, zoneID.c_str());
         strcat(sql, "' ;");
     }
-    _insertIntoTable(sql);
+    int rc = _insertIntoTable(sql);
+    return (rc == SQLITE_OK)? true: false;
 }
-void DatabaseSQL::reduceStock(std::string productID, int amount) {}
-void DatabaseSQL::reduceStock(std::string productID, std::string zoneID, int quantity) {
+bool DatabaseSQL::reduceStock(std::string productID, int amount) { return false;}
+bool DatabaseSQL::reduceStock(std::string productID, std::string zoneID, int quantity) {
     char sql[4096] = "";
     int productStock = getProductStock(productID, zoneID);
     if (productStock == -1){
@@ -292,7 +296,7 @@ void DatabaseSQL::reduceStock(std::string productID, std::string zoneID, int qua
     }else{
         if(quantity > productStock){
             std::cout<<"Not enough stock in zone: "<<zoneID<<std::endl;
-            return;
+            return false;
         }
 
         std::string updatedStock = std::to_string(productStock - quantity);
@@ -305,7 +309,8 @@ void DatabaseSQL::reduceStock(std::string productID, std::string zoneID, int qua
         strcat(sql, zoneID.c_str());
         strcat(sql, "' ;");
     }
-    _insertIntoTable(sql);
+    int rc = _insertIntoTable(sql);
+    return (rc == SQLITE_OK)? true: false;
 }
 
 int DatabaseSQL::getProductStock(std::string productID) {
@@ -570,7 +575,6 @@ std::vector<std::string> DatabaseSQL::getAvailableZones(){
 
 std::map<string, std::vector<string> > DatabaseSQL::search(string searchKeyworkd, string searchType, string tableName)
 {
-    //SELECT stock.Product_id, products.Name,  stock.Zone_id, stock.Quantity FROM stock join products  on stock.Product_id = products.id where stock.Zone_id LIKE  '%ZO%';
     char sql[4096] = "";
     if(tableName == "stock"){
         strcat(sql, "SELECT stock.Product_id as Product_id, products.Name as Product_name, stock.Zone_id as Zone_id, stock.Quantity as Quantity FROM stock JOIN products on stock.Product_id=products.id where ");

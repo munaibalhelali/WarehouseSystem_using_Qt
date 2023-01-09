@@ -7,7 +7,8 @@
 #include <map>
 #include <string.h>
 #include "warehouseSystem/person.hpp"
-#include "warehouseSystem/database.hpp"
+#include "warehouseSystem/product.hpp"
+#include "warehouseSystem/zone.hpp"
 #include "warehouseSystem/idGenerator.hpp"
 #include <QtSql/QSqlDatabase>
 
@@ -23,7 +24,7 @@
 #endif
 
 
-class DatabaseSQL : public Database
+class DatabaseSQL
 {
 private:
     sqlite3 * db;
@@ -51,18 +52,18 @@ public:
     DatabaseSQL(const char* path);
     ~DatabaseSQL();
 
-    void addUser(Person newUser);
+    bool addUser(Person newUser);
     Person getUser(std::string personID);
     bool removeUser(std::string personID);
-    void addProduct(Product newProcut);
+    bool addProduct(Product newProcut);
     Product getProduct(std::string productID);
     bool removeProduct(std::string productID);
-    void addZone(Zone newZone);
+    bool addZone(Zone newZone);
     Zone getZone(std::string zoneID);
     bool removeZone(std::string zoneID);
-    void addStock(std::string stockID,std::string zoneID, int amount );
-    void reduceStock(std::string stockID, int amount);
-    void reduceStock(std::string productID, std::string zoneID, int amount);
+    bool addStock(std::string stockID,std::string zoneID, int amount );
+    bool reduceStock(std::string stockID, int amount);
+    bool reduceStock(std::string productID, std::string zoneID, int amount);
     int getProductStock(std::string stockID);
     int getProductStock(std::string stockID, std::string zoneID);
     std::map<std::string, int> getZoneStock(std::string zoneID);

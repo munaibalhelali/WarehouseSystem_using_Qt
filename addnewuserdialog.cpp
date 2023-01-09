@@ -31,7 +31,6 @@ void AddNewUserDialog::on_saveButton_clicked()
             role = ui->staffRadioButton->text();
         }
         saveData();
-        accept();
     }else if(!inPassword.isEmpty() && inPassword != inConfPassword){
         ui->confirmPasswordLineEdit->setStyleSheet("background:rgb(255,106,77)");
     }else{
@@ -54,6 +53,11 @@ void AddNewUserDialog::saveData()
 {
     std::string id = database.generateID("person");
     Person person(name.toStdString(), id, role.toStdString(), password.toStdString());
-    database.addUser(person);
-
+    bool ret = database.addUser(person);
+    if(ret){
+        QMessageBox::information(this,
+                                 "Successful!",
+                                 "New user was recored!",
+                                 QMessageBox::Ok);
+    }
 }

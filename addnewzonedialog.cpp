@@ -74,7 +74,11 @@ void AddNewZoneDialog::saveData()
     std::string id = database.generateID("zone");
     std::map<std::string, int> stock;
     Zone zone(id, area.toStdString(), category.toStdString(), location.toStdString(), stock);
-    database.addZone(zone);
-    accept();
-
+    bool ret = database.addZone(zone);
+    if(ret){
+        QMessageBox::information(this,
+                                 "Successful!",
+                                 "New zone was recored!",
+                                 QMessageBox::Ok);
+    }
 }

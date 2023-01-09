@@ -38,7 +38,3 @@ void SignInWidget::on_signInPushButton_clicked()
     }
 }
 
-void SignInWidget::on_passwordLineEdit_cursorPositionChanged(int arg1, int arg2)
-{
-
-}

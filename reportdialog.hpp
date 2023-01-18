@@ -15,6 +15,13 @@ public:
     explicit ReportDialog(QWidget *parent = nullptr);
     ~ReportDialog();
 
+private slots:
+    void on_exportPushButton_clicked();
+
+    void on_closePushButton_clicked();
+
+    void on_generatePushButton_clicked();
+
 private:
     Ui::ReportDialog *ui;
 };

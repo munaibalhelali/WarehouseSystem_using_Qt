@@ -59,6 +59,7 @@ else()
     dispatchstockdialog.cpp
     showavailablestockdialog.cpp
     signinwidget.cpp
+    reportdialog.cpp
 
     mainwindow.ui
     addnewuserdialog.ui
@@ -71,6 +72,7 @@ else()
     dispatchstockdialog.ui
     showavailablestockdialog.ui
     signinwidget.ui
+    reportdialog.ui
 
 
   )

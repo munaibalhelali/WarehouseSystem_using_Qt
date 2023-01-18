@@ -12,6 +12,7 @@
 #include "removeproductdialog.h"
 #include "removezonedialog.h"
 #include "dispatchstockdialog.h"
+#include "reportdialog.hpp"
 
 AdminControlWidget::AdminControlWidget(QWidget *parent) : QWidget(parent)
 {
@@ -137,6 +138,6 @@ void AdminControlWidget::dispatchStock()
 
 void AdminControlWidget::generateReport()
 {
-
-
+    ReportDialog* reportDialog = new ReportDialog(this);
+    reportDialog->show();
 }

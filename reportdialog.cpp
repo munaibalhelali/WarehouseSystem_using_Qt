@@ -12,3 +12,18 @@ ReportDialog::~ReportDialog()
 {
     delete ui;
 }
+
+void ReportDialog::on_exportPushButton_clicked()
+{
+
+}
+
+void ReportDialog::on_closePushButton_clicked()
+{
+
+}
+
+void ReportDialog::on_generatePushButton_clicked()
+{
+
+}

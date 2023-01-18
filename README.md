@@ -18,6 +18,7 @@ The system is far from perfect and missing a lot of features however it satisfie
 
 ## Databse
 The system uses SQLIT3 database and uses sqlit3.h API. 
+Note: Qt5 creates a separate build directory hence the database in the data folder won't be used. For the time being, you need to copy it manually to the build directory.
 
 ## To build and try
 You need to clone the repository and build it using Qt5 Creator as no standalone build is provided at the moment. 
